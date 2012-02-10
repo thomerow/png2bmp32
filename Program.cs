@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace png2bmp32
 {
@@ -9,6 +7,8 @@ namespace png2bmp32
    {
       static void Main(string[] args)
       {
+         Png2Bmp32 png2bmp32 = new Png2Bmp32(args);
+         png2bmp32.Run();
       }
    }
 }

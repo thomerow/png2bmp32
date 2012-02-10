@@ -28,7 +28,7 @@ namespace png2bmp32
          }
          catch (Exception exc)
          {
-            Console.WriteLine("Error: {0}", exc.Message);
+            Console.WriteLine(Properties.Resource.strErr, exc.Message);
          }
       }
 

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="strCmdLnParamCount" xml:space="preserve">
+    <value>Wrong number of command line arguments given.</value>
+  </data>
+  <data name="strErr" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
   <data name="strNoPNGData" xml:space="preserve">
     <value>Input file doesn't contain PNG image data.</value>
   </data>

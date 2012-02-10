@@ -61,6 +61,24 @@ namespace png2bmp32.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wrong number of command line arguments given..
+        /// </summary>
+        internal static string strCmdLnParamCount {
+            get {
+                return ResourceManager.GetString("strCmdLnParamCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: {0}.
+        /// </summary>
+        internal static string strErr {
+            get {
+                return ResourceManager.GetString("strErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input file doesn&apos;t contain PNG image data..
         /// </summary>
         internal static string strNoPNGData {

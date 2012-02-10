@@ -48,7 +48,7 @@ namespace png2bmp32
 
       internal void Parse()
       {
-         if (Args.Length != 2) throw new Exception("Wrong number of command line arguments given.");
+         if (Args.Length != 2) throw new Exception(Properties.Resource.strCmdLnParamCount);
 
          OnInputPathParsed(new PathParsedEventArgs(Args[0]));
          OnOutputPathParsed(new PathParsedEventArgs(Args[1]));

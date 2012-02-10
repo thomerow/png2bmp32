@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ArgumentParser.cs" />
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="ImageTools.cs" />
     <Compile Include="Png2Bmp32.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

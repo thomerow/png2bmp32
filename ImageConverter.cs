@@ -11,10 +11,14 @@ namespace png2bmp32
 #if DEBUG
          Console.WriteLine("Input path: \"{0}\", output path: \"{1}\"", _inputPath, _outputPath);
 #endif
-         if (!Path.GetExtension(_inputPath).Equals(".png", StringComparison.CurrentCultureIgnoreCase)) {
-            throw new Exception("Input file has to be a PNG image.");
-         }
          byte[] inputData = File.ReadAllBytes(_inputPath);
+
+         if (!IsPNG(inputData)) throw new Exception(Properties.Resource.strNoPNGData);
+      }
+
+      private static bool IsPNG(byte[] inputData)
+      {
+         throw new NotImplementedException();
       }
    }
 }

@@ -43,8 +43,8 @@ namespace png2bmp32
 
          if (imgInput.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
          {
-			// Copy image data line by line:
-			
+            // Copy image data line by line:
+            
             BitmapData bmpDataInput = null;
             try
             {
@@ -84,8 +84,8 @@ namespace png2bmp32
          }
          else
          {
-			// Copy image data pixel by pixel:
-			
+            // Copy image data pixel by pixel:
+            
             for (int y = nHeight - 1; y >= 0; --y)
             {
                for (int x = 0; x < nWidth; ++x)

@@ -14,7 +14,6 @@ namespace png2bmp32
 
       internal static void Convert(string strInputPath, string strOutputPath)
       {
-         int nWidth, nHeight;
          MemoryStream output = new MemoryStream();
 
          // Use input file name as output file name (with extension "bmp" instead of "png") 
@@ -37,72 +36,82 @@ namespace png2bmp32
          // Write BMP file and info headers
          WriteBMPHeaders(output, bmpInput);
 
-         // Get source image dimensions
-         nWidth = bmpInput.Width;
-         nHeight = bmpInput.Height;
-
          if (imgInput.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
          {
             // Copy image data line by line:
-            
-            BitmapData bmpDataInput = null;
-            try
-            {
-               bmpDataInput = bmpInput.LockBits(
-                  new Rectangle(0, 0, nWidth, nHeight),
-                  System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                  System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-               int nStride = bmpDataInput.Stride;
-               byte[] line = new byte[Math.Abs(nStride)];
-
-               if (nStride > 0)     // Bottom up image
-               {                 
-                  IntPtr ptr = new IntPtr((long)bmpDataInput.Scan0 + (nHeight - 1) * nStride);
-                  for (int i = 0; i < nHeight; ++i)
-                  {
-                     Marshal.Copy(ptr, line, 0, line.Length);
-                     output.Write(line, 0, line.Length);
-                     ptr = new IntPtr((long)ptr - nStride);
-                  }
-               }
-               else                 // Top down image
-               {
-                  IntPtr ptr = bmpDataInput.Scan0;
-                  for (int i = 0; i < nHeight; ++i)
-                  {
-                     Marshal.Copy(ptr, line, 0, line.Length);
-                     output.Write(line, 0, line.Length);
-                     ptr = new IntPtr((long)ptr + nStride);
-                  }
-               }
-            }
-            finally
-            {
-               if (bmpDataInput != null) bmpInput.UnlockBits(bmpDataInput);
-            }
+            Convert32bppSource(output, bmpInput);
          }
          else
          {
             // Copy image data pixel by pixel:
-            
-            for (int y = nHeight - 1; y >= 0; --y)
-            {
-               for (int x = 0; x < nWidth; ++x)
-               {
-                  Color c = bmpInput.GetPixel(x, y);
-                  output.WriteByte(c.B);
-                  output.WriteByte(c.G);
-                  output.WriteByte(c.R);
-                  output.WriteByte(c.A);
-               }
-            }
+            ConvertNon32bppSource(output, bmpInput);
          }
 
          Debug.WriteLine("Destination image data size in bytes: {0}", output.Length);
 
          // Write generated 32bit BMP data to file:
          using (FileStream file = File.OpenWrite(strOutputPath)) output.WriteTo(file);
+      }
+
+      private static void ConvertNon32bppSource(MemoryStream output, Bitmap bmpInput)
+      {
+         int nWidth = bmpInput.Width;
+         int nHeight = bmpInput.Height;
+
+         for (int y = nHeight - 1; y >= 0; --y)
+         {
+            for (int x = 0; x < nWidth; ++x)
+            {
+               Color c = bmpInput.GetPixel(x, y);
+               output.WriteByte(c.B);
+               output.WriteByte(c.G);
+               output.WriteByte(c.R);
+               output.WriteByte(c.A);
+            }
+         }
+      }
+
+      private static void Convert32bppSource(MemoryStream output, Bitmap bmpInput)
+      {
+         BitmapData bmpDataInput = null;
+         int nWidth = bmpInput.Width;
+         int nHeight = bmpInput.Height;
+
+         try
+         {
+            bmpDataInput = bmpInput.LockBits(
+               new Rectangle(0, 0, nWidth, nHeight),
+               System.Drawing.Imaging.ImageLockMode.ReadOnly,
+               System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            int nStride = bmpDataInput.Stride;
+            byte[] line = new byte[Math.Abs(nStride)];
+
+            if (nStride > 0)     // Bottom up image
+            {
+               IntPtr ptr = new IntPtr((long)bmpDataInput.Scan0 + (nHeight - 1) * nStride);
+               for (int i = 0; i < nHeight; ++i)
+               {
+                  Marshal.Copy(ptr, line, 0, line.Length);
+                  output.Write(line, 0, line.Length);
+                  ptr = new IntPtr((long)ptr - nStride);
+               }
+            }
+            else                 // Top down image
+            {
+               IntPtr ptr = bmpDataInput.Scan0;
+               for (int i = 0; i < nHeight; ++i)
+               {
+                  Marshal.Copy(ptr, line, 0, line.Length);
+                  output.Write(line, 0, line.Length);
+                  ptr = new IntPtr((long)ptr + nStride);
+               }
+            }
+         }
+         finally
+         {
+            if (bmpDataInput != null) bmpInput.UnlockBits(bmpDataInput);
+         }
       }
 
       private static void WriteBMPHeaders(MemoryStream output, Bitmap bmpInput)

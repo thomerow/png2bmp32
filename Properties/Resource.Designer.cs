@@ -61,7 +61,11 @@ namespace png2bmp32.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrong number of command line arguments given..
+        ///   Looks up a localized string similar to Wrong number of command line arguments given.
+        ///
+        ///Usage: png2bmp32 input_path [out_path]
+        ///
+        ///(Omitting out_path creates a BMP image in the same directory as the source image).
         /// </summary>
         internal static string strCmdLnParamCount {
             get {

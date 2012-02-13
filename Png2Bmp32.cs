@@ -30,7 +30,8 @@ namespace png2bmp32
          }
          catch (Exception exc)
          {
-            Console.WriteLine(Properties.Resource.strErr, exc.Message);
+            Console.Error.WriteLine(Properties.Resource.strErr, exc.Message);
+            Environment.ExitCode = -1;
          }
       }
 

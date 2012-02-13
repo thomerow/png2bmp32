@@ -84,7 +84,17 @@ namespace png2bmp32
          }
          else
          {
-            throw new Exception(Properties.Resource.strWrongPNGFormat);
+            for (int y = nHeight - 1; y >= 0; --y)
+            {
+               for (int x = 0; x < nWidth; ++x)
+               {
+                  Color c = bmpInput.GetPixel(x, y);
+                  output.WriteByte(c.B);
+                  output.WriteByte(c.G);
+                  output.WriteByte(c.R);
+                  output.WriteByte(c.A);
+               }
+            }
          }
 
          Debug.WriteLine("Destination image data size in bytes: {0}", output.Length);

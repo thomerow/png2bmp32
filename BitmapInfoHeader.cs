@@ -28,7 +28,7 @@ namespace png2bmp32
 
       public void Init()
       {
-         biSize = (uint)Marshal.SizeOf(this);
+         biSize = Size;
       }
    }
 }

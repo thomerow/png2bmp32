@@ -56,7 +56,7 @@ namespace png2bmp32
                int nStride = bmpDataInput.Stride;
                byte[] line = new byte[Math.Abs(nStride)];
 
-               if (nStride > 0)     // Bottom up BMP
+               if (nStride > 0)     // Bottom up image
                {                 
                   IntPtr ptr = new IntPtr((long)bmpDataInput.Scan0 + (nHeight - 1) * nStride);
                   for (int i = 0; i < nHeight; ++i)
@@ -66,7 +66,7 @@ namespace png2bmp32
                      ptr = new IntPtr((long)ptr - nStride);
                   }
                }
-               else                 // Top down BMP
+               else                 // Top down image
                {
                   IntPtr ptr = bmpDataInput.Scan0;
                   for (int i = 0; i < nHeight; ++i)

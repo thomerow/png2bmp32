@@ -17,6 +17,13 @@ namespace png2bmp32
          int nWidth, nHeight;
          MemoryStream output = new MemoryStream();
 
+         // Use input file name as output file name (with extension "bmp" instead of "png") 
+         // if no output path is given:
+         if (strOutputPath == "")
+         {
+            strOutputPath = Path.GetDirectoryName(strInputPath) + Path.GetFileNameWithoutExtension(strInputPath) + ".bmp";
+         }
+
          Debug.WriteLine("Input path: \"{0}\", output path: \"{1}\"", strInputPath, strOutputPath);
 
          // Load source image data and check if it is a png

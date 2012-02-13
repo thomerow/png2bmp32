@@ -12,6 +12,8 @@ namespace png2bmp32
       public Png2Bmp32(string[] args)
       {
          _args = args;
+         _inputPath = "";
+         _outputPath = "";
       }
 
       internal void Run()

@@ -48,10 +48,10 @@ namespace png2bmp32
 
       internal void Parse()
       {
-         if (Args.Length != 2) throw new Exception(Properties.Resource.strCmdLnParamCount);
+         if ((Args.Length < 1) || (Args.Length > 2)) throw new Exception(Properties.Resource.strCmdLnParamCount);
 
          OnInputPathParsed(new PathParsedEventArgs(Args[0]));
-         OnOutputPathParsed(new PathParsedEventArgs(Args[1]));
+         if (Args.Length == 2) OnOutputPathParsed(new PathParsedEventArgs(Args[1]));
          OnFinishedArgumentParsing(new EventArgs());
       }
    }

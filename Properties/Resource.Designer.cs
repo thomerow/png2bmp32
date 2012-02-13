@@ -86,5 +86,14 @@ namespace png2bmp32.Properties {
                 return ResourceManager.GetString("strNoPNGData", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This program only takes 32bit PNGs as input files for now..
+        /// </summary>
+        internal static string strWrongPNGFormat {
+            get {
+                return ResourceManager.GetString("strWrongPNGFormat", resourceCulture);
+            }
+        }
     }
 }

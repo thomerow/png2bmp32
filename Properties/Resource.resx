@@ -126,4 +126,7 @@
   <data name="strNoPNGData" xml:space="preserve">
     <value>Input file doesn't contain PNG image data.</value>
   </data>
+  <data name="strWrongPNGFormat" xml:space="preserve">
+    <value>This program only takes 32bit PNGs as input files for now.</value>
+  </data>
 </root>

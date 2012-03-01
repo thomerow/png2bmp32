@@ -8,10 +8,18 @@ using System.Diagnostics;
 
 namespace png2bmp32
 {
+   /// <summary>
+   /// Image converter class.
+   /// </summary>
    class ImageConverter
    {
       public const float InchesPerMeter = 39.3700787f;
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="strInputPath">…</param>
+      /// <param name="strOutputPath">…</param>
       internal static void Convert(string strInputPath, string strOutputPath)
       {
          MemoryStream output = new MemoryStream();
@@ -53,6 +61,11 @@ namespace png2bmp32
          using (FileStream file = File.OpenWrite(strOutputPath)) output.WriteTo(file);
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="output">…</param>
+      /// <param name="bmpInput">…</param>
       private static void ConvertNon32bppSource(MemoryStream output, Bitmap bmpInput)
       {
          int nWidth = bmpInput.Width;
@@ -71,6 +84,11 @@ namespace png2bmp32
          }
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="output">…</param>
+      /// <param name="bmpInput">…</param>
       private static void Convert32bppSource(MemoryStream output, Bitmap bmpInput)
       {
          BitmapData bmpDataInput = null;
@@ -114,6 +132,11 @@ namespace png2bmp32
          }
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="output">…</param>
+      /// <param name="bmpInput">…</param>
       private static void WriteBMPHeaders(MemoryStream output, Bitmap bmpInput)
       {
          int nWidth = bmpInput.Width;
@@ -156,6 +179,11 @@ namespace png2bmp32
          output.Write(dataHdrBmpInf, 0, dataHdrBmpInf.Length);
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="structure">…</param>
+      /// <returns>…</returns>
       internal static byte[] StructureToByteArray(object structure)
       {
          int nLen = Marshal.SizeOf(structure);

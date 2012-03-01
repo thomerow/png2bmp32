@@ -3,12 +3,19 @@ using System.Collections.Generic;
 
 namespace png2bmp32
 {
+   /// <summary>
+   /// …
+   /// </summary>
    class Png2Bmp32
    {
       private string[] _args;
       private string _inputPath;
       private string _outputPath;
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="args">…</param>
       public Png2Bmp32(string[] args)
       {
          _args = args;
@@ -16,6 +23,9 @@ namespace png2bmp32
          _outputPath = "";
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
       internal void Run()
       {
          try
@@ -35,16 +45,31 @@ namespace png2bmp32
          }
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="sender">…</param>
+      /// <param name="e">…</param>
       void parser_FinishedArgumentParsing(object sender, EventArgs e)
       {
          ImageConverter.Convert(_inputPath, _outputPath);
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="sender">…</param>
+      /// <param name="e">…</param>
       void parser_InputPathParsed(object sender, PathParsedEventArgs e)
       {
          _inputPath = e.Path;
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="sender">…</param>
+      /// <param name="e">…</param>
       void parser_OutputPathParsed(object sender, PathParsedEventArgs e)
       {
          _outputPath = e.Path;

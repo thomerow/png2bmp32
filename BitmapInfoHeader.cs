@@ -6,27 +6,36 @@ using System.Runtime.InteropServices;
 
 namespace png2bmp32
 {
+   /// <summary>
+   /// …
+   /// </summary>
    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-   public struct BitmapInfoHeader
+   internal struct BitmapInfoHeader
    {
-      public UInt32 biSize;
-      public Int32 biWidth;
-      public Int32 biHeight;
-      public UInt16 biPlanes;
-      public UInt16 biBitCount;
-      public UInt32 biCompression;
-      public UInt32 biSizeImage;
-      public Int32 biXPelsPerMeter;
-      public Int32 biYPelsPerMeter;
-      public UInt32 biClrUsed;
-      public UInt32 biClrImportant;
+      internal UInt32 biSize;
+      internal Int32 biWidth;
+      internal Int32 biHeight;
+      internal UInt16 biPlanes;
+      internal UInt16 biBitCount;
+      internal UInt32 biCompression;
+      internal UInt32 biSizeImage;
+      internal Int32 biXPelsPerMeter;
+      internal Int32 biYPelsPerMeter;
+      internal UInt32 biClrUsed;
+      internal UInt32 biClrImportant;
 
-      public static uint Size
+      /// <summary>
+      /// …
+      /// </summary>
+      internal static uint Size
       {
          get { return (uint)Marshal.SizeOf(typeof(BitmapInfoHeader)); }
       }
 
-      public void Init()
+      /// <summary>
+      /// …
+      /// </summary>
+      internal void Init()
       {
          biSize = Size;
       }

@@ -6,20 +6,29 @@ using System.Runtime.InteropServices;
 
 namespace png2bmp32
 {
+   /// <summary>
+   /// …
+   /// </summary>
    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-   public struct BitmapFileHeader
+   internal struct BitmapFileHeader
    {
-      public UInt16 bfType;
-      public UInt32 bfSize;
-      public UInt16 bfReserved1;
-      public UInt16 bfReserved2;
-      public UInt32 bfOffBits;
+      internal UInt16 bfType;
+      internal UInt32 bfSize;
+      internal UInt16 bfReserved1;
+      internal UInt16 bfReserved2;
+      internal UInt32 bfOffBits;
 
+      /// <summary>
+      /// …
+      /// </summary>
       internal static uint Size
       {
          get { return (uint)Marshal.SizeOf(typeof(BitmapFileHeader)); }
       }
 
+      /// <summary>
+      /// …
+      /// </summary>
       internal void Init()
       {
          bfType = (UInt16)((byte)'B' | ((byte)'M' << 8));

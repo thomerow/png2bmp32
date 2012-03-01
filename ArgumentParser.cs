@@ -19,13 +19,6 @@ namespace png2bmp32
    /// <summary>
    /// …
    /// </summary>
-   /// <param name="sender">…</param>
-   /// <param name="e">…</param>
-   delegate void PathParsedEventHandler(object sender, PathParsedEventArgs e);
-
-   /// <summary>
-   /// …
-   /// </summary>
    class ArgumentParser
    {
       public string[] Args { get; private set; }
@@ -39,8 +32,8 @@ namespace png2bmp32
          Args = args;
       }
 
-      public event PathParsedEventHandler InputPathParsed;
-      public event PathParsedEventHandler OutputPathParsed;
+      public event EventHandler<PathParsedEventArgs> InputPathParsed;
+      public event EventHandler<PathParsedEventArgs> OutputPathParsed;
       public event EventHandler FinishedArgumentParsing;
 
       /// <summary>

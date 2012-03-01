@@ -32,8 +32,8 @@ namespace png2bmp32
          {
             ArgumentParser parser = new ArgumentParser(_args);
 
-            parser.InputPathParsed += new PathParsedEventHandler(parser_InputPathParsed);
-            parser.OutputPathParsed += new PathParsedEventHandler(parser_OutputPathParsed);
+            parser.InputPathParsed += new EventHandler<PathParsedEventArgs>(parser_InputPathParsed);
+            parser.OutputPathParsed += new EventHandler<PathParsedEventArgs>(parser_OutputPathParsed);
             parser.FinishedArgumentParsing += new EventHandler(parser_FinishedArgumentParsing);
 
             parser.Parse();

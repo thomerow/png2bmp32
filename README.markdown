@@ -1,8 +1,8 @@
 png2bmp32
 =========
 
-This program has a single purpose: It converts PNG files with an alpha channel to 
-32bpp BMP files. 
+This program has a single purpose: It converts 32bpp RGBA PNG files to 
+32bpp BMP files preserving the alpha channel. 
 
 Motivation
 ----------

@@ -32,9 +32,9 @@ namespace png2bmp32
          {
             ArgumentParser parser = new ArgumentParser(_args);
 
-            parser.InputPathParsed += new EventHandler<PathParsedEventArgs>(parser_InputPathParsed);
-            parser.OutputPathParsed += new EventHandler<PathParsedEventArgs>(parser_OutputPathParsed);
-            parser.FinishedArgumentParsing += new EventHandler(parser_FinishedArgumentParsing);
+            parser.InputPathParsed += Parser_InputPathParsed;
+            parser.OutputPathParsed += Parser_OutputPathParsed;
+            parser.FinishedArgumentParsing += Parser_FinishedArgumentParsing;
 
             parser.Parse();
          }
@@ -50,7 +50,7 @@ namespace png2bmp32
       /// </summary>
       /// <param name="sender">…</param>
       /// <param name="e">…</param>
-      void parser_FinishedArgumentParsing(object sender, EventArgs e)
+      void Parser_FinishedArgumentParsing(object sender, EventArgs e)
       {
          ImageConverter.Convert(_inputPath, _outputPath);
       }
@@ -60,7 +60,7 @@ namespace png2bmp32
       /// </summary>
       /// <param name="sender">…</param>
       /// <param name="e">…</param>
-      void parser_InputPathParsed(object sender, PathParsedEventArgs e)
+      void Parser_InputPathParsed(object sender, PathParsedEventArgs e)
       {
          _inputPath = e.Path;
       }
@@ -70,7 +70,7 @@ namespace png2bmp32
       /// </summary>
       /// <param name="sender">…</param>
       /// <param name="e">…</param>
-      void parser_OutputPathParsed(object sender, PathParsedEventArgs e)
+      void Parser_OutputPathParsed(object sender, PathParsedEventArgs e)
       {
          _outputPath = e.Path;
       }

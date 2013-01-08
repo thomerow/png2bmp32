@@ -87,6 +87,9 @@
   <ItemGroup>
     <None Include="README.markdown" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitattributes" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)$(SolutionName).Test\Test Files"</PostBuildEvent>

@@ -28,10 +28,13 @@ namespace png2bmp32
          // if no output path is given:
          if (strOutputPath == "")
          {
-            strOutputPath = Path.GetDirectoryName(strInputPath) + Path.GetFileNameWithoutExtension(strInputPath) + ".bmp";
+            strOutputPath = Path.GetDirectoryName(strInputPath) + "\\" + Path.GetFileNameWithoutExtension(strInputPath) + ".bmp";
+#if DEBUG
+            Console.WriteLine("Generated output path: " + strOutputPath);
+#endif
          }
 
-         Debug.WriteLine("Input path: \"{0}\", output path: \"{1}\"", strInputPath, strOutputPath);
+         Debug.WriteLine(string.Format("Input path: \"{0}\", output path: \"{1}\"", strInputPath, strOutputPath));
 
          // Load source image data and check if it is a png
          byte[] inputData = File.ReadAllBytes(strInputPath);
@@ -55,7 +58,7 @@ namespace png2bmp32
             ConvertNon32bppSource(output, bmpInput);
          }
 
-         Debug.WriteLine("Destination image data size in bytes: {0}", output.Length);
+         Debug.WriteLine(string.Format("Destination image data size in bytes: {0}", output.Length));
 
          // Write generated 32bit BMP data to file:
          using (FileStream file = File.OpenWrite(strOutputPath)) output.WriteTo(file);

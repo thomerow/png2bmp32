@@ -19,49 +19,41 @@ namespace png2bmp32
       /// …
       /// </summary>
       /// <param name="strInputPath">…</param>
-      /// <param name="strOutputPath">…</param>
-      internal static void Convert(string strInputPath, string strOutputPath)
+      internal static void Convert(string strInputPath)
       {
-         MemoryStream output = new MemoryStream();
-
-         // Use input file name as output file name (with extension "bmp" instead of "png") 
-         // if no output path is given:
-         if (strOutputPath == "")
-         {
-            strOutputPath = Path.GetDirectoryName(strInputPath) + "\\" + Path.GetFileNameWithoutExtension(strInputPath) + ".bmp";
-#if DEBUG
-            Console.WriteLine("Generated output path: " + strOutputPath);
-#endif
-         }
-
-         Debug.WriteLine(string.Format("Input path: \"{0}\", output path: \"{1}\"", strInputPath, strOutputPath));
+         string strOutputPath = Path.GetDirectoryName(strInputPath) + "\\" + Path.GetFileNameWithoutExtension(strInputPath) + ".bmp";
 
          // Load source image data and check if it is a png
          byte[] inputData = File.ReadAllBytes(strInputPath);
          if (!ImageTools.IsPNG(inputData)) throw new Exception(Properties.Resource.strNoPNGData);
 
          // Get a Bitmap object from the source image data
-         Image imgInput = Bitmap.FromStream(new MemoryStream(inputData));
+         Image imgInput;
+         using (var inputDataStream = new MemoryStream(inputData))
+         {
+            imgInput = Bitmap.FromStream(inputDataStream);
+         }
          Bitmap bmpInput = new Bitmap(imgInput);
 
          // Write BMP file and info headers
-         WriteBMPHeaders(output, bmpInput);
-
-         if (imgInput.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+         using (var output = new MemoryStream())
          {
-            // Copy image data line by line:
-            Convert32bppSource(output, bmpInput);
-         }
-         else
-         {
-            // Copy image data pixel by pixel:
-            ConvertNon32bppSource(output, bmpInput);
-         }
+            WriteBMPHeaders(output, bmpInput);
 
-         Debug.WriteLine(string.Format("Destination image data size in bytes: {0}", output.Length));
+            if (imgInput.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+            {
+               // Copy image data line by line:
+               Convert32bppSource(output, bmpInput);
+            }
+            else
+            {
+               // Copy image data pixel by pixel:
+               ConvertNon32bppSource(output, bmpInput);
+            }
 
-         // Write generated 32bit BMP data to file:
-         using (FileStream file = File.OpenWrite(strOutputPath)) output.WriteTo(file);
+            // Write generated 32bit BMP data to file:
+            using (FileStream file = File.OpenWrite(strOutputPath)) output.WriteTo(file);
+         }
       }
 
       /// <summary>

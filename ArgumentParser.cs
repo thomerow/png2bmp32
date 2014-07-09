@@ -33,7 +33,6 @@ namespace png2bmp32
       }
 
       public event EventHandler<PathParsedEventArgs> InputPathParsed;
-      public event EventHandler<PathParsedEventArgs> OutputPathParsed;
       public event EventHandler FinishedArgumentParsing;
 
       /// <summary>
@@ -44,16 +43,6 @@ namespace png2bmp32
       {
          if (InputPathParsed == null) return;
          InputPathParsed(this, e);
-      }
-
-      /// <summary>
-      /// …
-      /// </summary>
-      /// <param name="e">…</param>
-      protected virtual void OnOutputPathParsed(PathParsedEventArgs e)
-      {
-         if (OutputPathParsed == null) return;
-         OutputPathParsed(this, e);
       }
 
       /// <summary>
@@ -71,10 +60,9 @@ namespace png2bmp32
       /// </summary>
       internal void Parse()
       {
-         if ((Args.Length < 1) || (Args.Length > 2)) throw new Exception(Properties.Resource.strCmdLnParamCount);
+         if (Args.Length != 1) throw new Exception(Properties.Resource.strCmdLnParamCount);
 
          OnInputPathParsed(new PathParsedEventArgs(Args[0]));
-         if (Args.Length == 2) OnOutputPathParsed(new PathParsedEventArgs(Args[1]));
          OnFinishedArgumentParsing(new EventArgs());
       }
    }

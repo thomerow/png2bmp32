@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace png2bmp32
 {
@@ -9,8 +11,8 @@ namespace png2bmp32
    class Png2Bmp32
    {
       private string[] _args;
-      private string _inputPath;
-      private string _outputPath;
+      private string _inputPath = "";
+      private string _inputDir = "";
 
       /// <summary>
       /// …
@@ -19,8 +21,6 @@ namespace png2bmp32
       public Png2Bmp32(string[] args)
       {
          _args = args;
-         _inputPath = "";
-         _outputPath = "";
       }
 
       /// <summary>
@@ -33,7 +33,6 @@ namespace png2bmp32
             ArgumentParser parser = new ArgumentParser(_args);
 
             parser.InputPathParsed += Parser_InputPathParsed;
-            parser.OutputPathParsed += Parser_OutputPathParsed;
             parser.FinishedArgumentParsing += Parser_FinishedArgumentParsing;
 
             parser.Parse();
@@ -52,7 +51,47 @@ namespace png2bmp32
       /// <param name="e">…</param>
       void Parser_FinishedArgumentParsing(object sender, EventArgs e)
       {
-         ImageConverter.Convert(_inputPath, _outputPath);
+         Convert();
+      }
+
+      /// <summary>
+      /// …
+      /// </summary>
+      private void Convert()
+      {
+         if (!string.IsNullOrEmpty(_inputDir)) ConvertDir();
+         else ConvertPath();
+      }
+
+      /// <summary>
+      /// …
+      /// </summary>
+      private void ConvertPath()
+      {
+         ImageConverter.Convert(_inputPath);
+      }
+
+      /// <summary>
+      /// …
+      /// </summary>
+      private void ConvertDir()
+      {
+         ConvertDir(_inputDir);
+      }
+
+      /// <summary>
+      /// …
+      /// </summary>
+      /// <param name="dir">…</param>
+      private void ConvertDir(string dir)
+      {
+         foreach (string d in Directory.GetDirectories(dir))
+         {
+            ConvertDir(d);
+         }
+
+         string[] files = Directory.GetFiles(dir, "*.png");
+         Parallel.ForEach(files, path => ImageConverter.Convert(path));
       }
 
       /// <summary>
@@ -62,17 +101,9 @@ namespace png2bmp32
       /// <param name="e">…</param>
       void Parser_InputPathParsed(object sender, PathParsedEventArgs e)
       {
-         _inputPath = e.Path;
-      }
-
-      /// <summary>
-      /// …
-      /// </summary>
-      /// <param name="sender">…</param>
-      /// <param name="e">…</param>
-      void Parser_OutputPathParsed(object sender, PathParsedEventArgs e)
-      {
-         _outputPath = e.Path;
+         FileAttributes fa = File.GetAttributes(e.Path);
+         if ((fa & FileAttributes.Directory) != 0) _inputDir = e.Path;
+         else _inputPath = e.Path;
       }
    }
 }

@@ -35,9 +35,9 @@ namespace png2bmp32
          }
          Bitmap bmpInput = new Bitmap(imgInput);
 
-         // Write BMP file and info headers
          using (var output = new MemoryStream())
          {
+            // Write BMP file and info headers
             WriteBMPHeaders(output, bmpInput);
 
             if (imgInput.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
